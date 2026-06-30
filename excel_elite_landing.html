@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel Elite — O Básico que Funciona</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Oswald:wght@700&display=swap');
+
+:root {
+  --preto:       #080808;
+  --preto-suave: #101010;
+  --borda:       #1c1c1c;
+  --cinza-txt:   #888;
+  --branco:      #f0f0f0;
+  --verde:       #00e64d;
+  --verde-escuro:#0a2914;
+  --vermelho:    #e03030;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--preto);
+  color: var(--branco);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── UTILITÁRIOS ── */
+.container { max-width: 640px; margin: 0 auto; padding: 0 22px; }
+.verde     { color: var(--verde); }
+.vermelho  { color: var(--vermelho); }
+.cinza     { color: var(--cinza-txt); }
+.centro    { text-align: center; }
+
+/* ── BARRA TOPO ── */
+.topo {
+  background: var(--vermelho);
+  text-align: center;
+  padding: 9px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 56px 0 48px;
+  text-align: center;
+}
+.hero-tag {
+  display: inline-block;
+  border: 1px solid var(--verde);
+  color: var(--verde);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 2px;
+  margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(34px, 8vw, 58px);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.04;
+  letter-spacing: -.5px;
+  margin-bottom: 24px;
+}
+.hero h1 .linha-verde  { color: var(--verde); display: block; }
+.hero h1 .linha-normal { color: var(--branco); display: block; }
+.hero h1 .linha-cinza  { color: #444; display: block; font-size: .6em; font-family: 'Inter', sans-serif; font-weight: 400; text-transform: none; letter-spacing: 0; margin-top: 6px; }
+
+.hero-sub {
+  font-size: 17px;
+  color: #aaa;
+  max-width: 500px;
+  margin: 0 auto 36px;
+  line-height: 1.6;
+}
+.hero-sub strong { color: var(--branco); }
+
+/* ── DIVISOR ── */
+.divisor {
+  border: none;
+  border-top: 1px solid var(--borda);
+  margin: 48px 0;
+}
+
+/* ── LABEL DE SEÇÃO ── */
+.label-secao {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--verde);
+  margin-bottom: 10px;
+}
+
+/* ── TITULO H2 ── */
+h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(22px, 5vw, 34px);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+/* ── PARÁGRAFO BASE ── */
+.txt { color: #999; font-size: 15px; margin-bottom: 14px; }
+.txt strong { color: var(--branco); }
+
+/* ── LISTA DE DORES ── */
+.dores { list-style: none; margin: 24px 0; }
+.dores li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 14px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--borda);
+  color: #999;
+  font-size: 15px;
+  align-items: start;
+}
+.dores li:last-child { border-bottom: none; }
+.dores li .icone { color: var(--vermelho); font-weight: 900; padding-top: 2px; }
+
+/* ── BLOCO DE OBJEÇÃO ── */
+.obj-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 24px 0;
+}
+@media(max-width:480px){ .obj-grid { grid-template-columns: 1fr; } }
+.obj-card {
+  background: var(--preto-suave);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 20px 18px;
+}
+.obj-duvida {
+  font-size: 13px;
+  color: var(--cinza-txt);
+  font-style: italic;
+  margin-bottom: 10px;
+  border-left: 3px solid var(--vermelho);
+  padding-left: 10px;
+}
+.obj-resposta {
+  font-size: 14px;
+  color: #bbb;
+  line-height: 1.5;
+}
+.obj-resposta strong { color: var(--verde); }
+
+/* ── MÓDULOS ── */
+.modulos { margin: 24px 0; }
+.modulo {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--borda);
+  align-items: start;
+}
+.modulo:last-child { border-bottom: none; }
+.mod-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 32px;
+  color: var(--verde);
+  opacity: .25;
+  line-height: 1;
+  padding-top: 2px;
+}
+.mod-titulo {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--branco);
+  margin-bottom: 4px;
+}
+.mod-desc { font-size: 13px; color: #666; }
+
+/* ── OFERTA BOX ── */
+.oferta {
+  background: var(--verde-escuro);
+  border: 1px solid rgba(0,230,77,.25);
+  border-radius: 8px;
+  padding: 32px 26px;
+  margin: 32px 0;
+}
+.oferta h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: var(--verde);
+  margin-bottom: 22px;
+  letter-spacing: .5px;
+}
+.item-oferta {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  align-items: start;
+}
+.item-oferta:last-child { border-bottom: none; }
+.item-check { color: var(--verde); font-weight: 900; padding-top: 2px; }
+.item-nome { font-size: 14px; color: #ccc; line-height: 1.4; }
+.item-nome strong { color: var(--branco); display: block; font-size: 15px; margin-bottom: 2px; }
+.item-val {
+  font-size: 12px;
+  color: var(--cinza-txt);
+  white-space: nowrap;
+  text-align: right;
+  padding-top: 2px;
+}
+
+/* ── PREÇO ── */
+.preco-wrap { text-align: center; margin: 40px 0 28px; }
+.preco-de {
+  font-size: 15px;
+  color: var(--cinza-txt);
+  text-decoration: line-through;
+  margin-bottom: 2px;
+}
+.preco-label { font-size: 13px; color: #555; margin-bottom: 6px; }
+.preco-valor {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(64px, 18vw, 96px);
+  color: var(--verde);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -2px;
+}
+.preco-obs { font-size: 13px; color: #444; margin-top: 8px; }
+
+/* ── CTA BOTÃO ── */
+.btn-cta {
+  display: block;
+  width: 100%;
+  background: var(--verde);
+  color: #000;
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  text-align: center;
+  padding: 20px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter .15s;
+}
+.btn-cta:hover { filter: brightness(1.1); }
+.cta-obs { text-align: center; font-size: 12px; color: #444; margin-top: 10px; }
+.cta-obs span { color: var(--verde); }
+
+/* ── GARANTIA ── */
+.garantia {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 18px;
+  background: var(--preto-suave);
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--verde);
+  border-radius: 6px;
+  padding: 24px 22px;
+  margin: 36px 0;
+  align-items: start;
+}
+.garantia-ico { font-size: 38px; line-height: 1; }
+.garantia h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--verde);
+  margin-bottom: 8px;
+}
+.garantia p { font-size: 13px; color: #888; }
+
+/* ── RODAPÉ ── */
+footer {
+  border-top: 1px solid var(--borda);
+  text-align: center;
+  padding: 32px 20px;
+  font-size: 12px;
+  color: #333;
+}
+
+/* ── STICKY CTA MOBILE ── */
+.sticky-cta {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--preto);
+  border-top: 1px solid var(--borda);
+  padding: 12px 20px;
+  z-index: 99;
+  display: none;
+}
+@media(max-width:640px){ .sticky-cta { display: block; } }
+.sticky-cta .btn-cta { font-size: 16px; padding: 15px; }
+
+/* ESPAÇO PRA STICKY NO MOBILE */
+@media(max-width:640px){ body { padding-bottom: 80px; } }
+
+/* ── SEPARADOR VISUAL ── */
+.sep-linha {
+  width: 40px;
+  height: 3px;
+  background: var(--verde);
+  margin: 0 auto 32px;
+}
+
+/* ── HIGHLIGHT INLINE ── */
+mark {
+  background: rgba(0,230,77,.12);
+  color: var(--verde);
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-style: normal;
+}
+</style>
+</head>
+<body>
+
+<!-- TOPO -->
+<div class="topo">⚡ Oferta por tempo limitado — Acesso imediato após pagamento</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">Para profissionais que não podem ficar pra trás</div>
+
+    <h1>
+      <span class="linha-cinza">Seu chefe pediu uma planilha.</span>
+      <span class="linha-vermelho" style="color:var(--vermelho)">Você travou.</span>
+      <span class="linha-verde">Isso acaba hoje.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Aprenda Excel do <strong>zero ao avançado em 7 dias</strong> — com aulas práticas, direto ao ponto, que você aplica no trabalho no dia seguinte.
+    </p>
+
+    <a href="#comprar" class="btn-cta">QUERO APRENDER EXCEL AGORA →</a>
+    <p class="cta-obs" style="margin-top:12px;">🔒 Pagamento seguro · <span>Acesso em menos de 1 minuto</span></p>
+  </div>
+</section>
+
+<div class="container">
+  <hr class="divisor">
+
+  <!-- DOR -->
+  <section>
+    <p class="label-secao">Você se identifica?</p>
+    <h2>Isso está <span class="verde">custando caro</span> pra você</h2>
+    <p class="txt">Cada tarefa que você faz no braço porque não sabe a fórmula certa é tempo perdido. E tempo é promoção, salário e oportunidade.</p>
+
+    <ul class="dores">
+      <li>
+        <span class="icone">✕</span>
+        <span>Você perde horas em tarefas que um profissional que sabe Excel faz em <strong>10 minutos</strong></span>
+      </li>
+      <li>
+        <span class="icone">✕</span>
+        <span>Quando pedem uma planilha na reunião, você fica quieto — ou entrega algo que dá vergonha</span>
+      </li>
+      <li>
+        <span class="icone">✕</span>
+        <span>Já tentou aprender pelo YouTube, mas os vídeos são longos demais, sem sequência, e você esquece tudo em uma semana</span>
+      </li>
+      <li>
+        <span class="icone">✕</span>
+        <span>Vê colegas ganhando mais porque dominam ferramentas que você ainda não aprendeu</span>
+      </li>
+      <li>
+        <span class="icone">✕</span>
+        <span>Sente que está ficando pra trás — e não sabe por onde começar direito</span>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- OBJEÇÕES -->
+  <section>
+    <p class="label-secao">Antes de você pensar...</p>
+    <h2>As desculpas que estão <span class="vermelho">te prendendo</span></h2>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-duvida">"Não tenho tempo"</div>
+        <div class="obj-resposta">As aulas têm de 5 a 15 minutos. Você aprende no horário do almoço, no transporte, onde quiser. <strong>Em 7 dias já usa no trabalho.</strong></div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-duvida">"Sou muito iniciante"</div>
+        <div class="obj-resposta">O curso começa do absoluto zero. <strong>Se você sabe abrir o Excel, já é suficiente</strong> pra começar.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-duvida">"Já tentei e não aprendi"</div>
+        <div class="obj-resposta">Porque o método errado não funciona. Aqui você aprende com <strong>exercícios reais</strong>, não teoria que não aplica.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-duvida">"R$27 é caro"</div>
+        <div class="obj-resposta">Menos que um almoço. E a <strong>primeira hora que você economizar</strong> no trabalho já pagou o curso 10 vezes.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- MÓDULOS -->
+  <section>
+    <p class="label-secao">Conteúdo do curso</p>
+    <h2>Do <span class="verde">zero ao profissional</span> — sem enrolação</h2>
+    <p class="txt">Cada módulo foi construído pra te dar uma habilidade que você <strong>usa no trabalho imediatamente</strong>. Sem conteúdo de enchimento.</p>
+
+    <div class="modulos">
+      <div class="modulo">
+        <div class="mod-num">01</div>
+        <div>
+          <div class="mod-titulo">Fundamentos que ninguém te ensinou direito</div>
+          <div class="mod-desc">Interface, atalhos de teclado e formatação profissional — a base que muda tudo</div>
+        </div>
+      </div>
+      <div class="modulo">
+        <div class="mod-num">02</div>
+        <div>
+          <div class="mod-titulo">Fórmulas essenciais do mercado</div>
+          <div class="mod-desc">SE, PROCV/XLOOKUP, SOMASE, CONT.SE — as que aparecem em 90% das vagas de emprego</div>
+        </div>
+      </div>
+      <div class="modulo">
+        <div class="mod-num">03</div>
+        <div>
+          <div class="mod-titulo">Tabelas dinâmicas do jeito certo</div>
+          <div class="mod-desc">Analise qualquer base de dados em minutos — a habilidade mais pedida em entrevistas</div>
+        </div>
+      </div>
+      <div class="modulo">
+        <div class="mod-num">04</div>
+        <div>
+          <div class="mod-titulo">Gráficos e dashboards profissionais</div>
+          <div class="mod-desc">Apresente dados de um jeito que impressiona qualquer gestor</div>
+        </div>
+      </div>
+      <div class="modulo">
+        <div class="mod-num">05</div>
+        <div>
+          <div class="mod-titulo">Recursos avançados que separam o profissional do amador</div>
+          <div class="mod-desc">Formatação condicional, validação de dados, proteção de planilhas e automações básicas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divisor">
+
+  <!-- OFERTA -->
+  <section id="comprar">
+    <p class="label-secao">O que você leva hoje</p>
+    <h2>Tudo que está <span class="verde">incluído</span></h2>
+
+    <div class="oferta">
+      <h3>Excel Elite — Pacote Completo</h3>
+
+      <div class="item-oferta">
+        <span class="item-check">✓</span>
+        <div class="item-nome">
+          <strong>Curso Excel Elite Completo</strong>
+          +20 aulas práticas, do básico ao avançado, com exercícios reais
+        </div>
+        <span class="item-val">R$197</span>
+      </div>
+
+      <div class="item-oferta">
+        <span class="item-check">✓</span>
+        <div class="item-nome">
+          <strong>Pack de Planilhas Prontas</strong>
+          5 planilhas profissionais que você baixa e já usa no trabalho
+        </div>
+        <span class="item-val">R$47</span>
+      </div>
+
+      <div class="item-oferta">
+        <span class="item-check">✓</span>
+        <div class="item-nome">
+          <strong>Guia de Atalhos do Excel</strong>
+          Os 30 atalhos que economizam horas por semana
+        </div>
+        <span class="item-val">R$27</span>
+      </div>
+
+      <div class="item-oferta">
+        <span class="item-check">✓</span>
+        <div class="item-nome">
+          <strong>Acesso Vitalício + Certificado + Suporte no WhatsApp</strong>
+          Sem mensalidade. Para sempre.
+        </div>
+        <span class="item-val">—</span>
+      </div>
+    </div>
+
+    <!-- PREÇO -->
+    <div class="preco-wrap">
+      <p class="preco-de">Valor total: R$271,00</p>
+      <p class="preco-label">hoje por apenas</p>
+      <div class="preco-valor">R$27</div>
+      <p class="preco-obs">pagamento único · sem mensalidade · acesso imediato</p>
+    </div>
+
+    <a href="#" class="btn-cta">SIM, QUERO MEU ACESSO AGORA →</a>
+    <p class="cta-obs">🔒 Pagamento 100% seguro via Kiwify · <span>Cartão, Pix ou Boleto</span></p>
+
+    <!-- GARANTIA -->
+    <div class="garantia">
+      <div class="garantia-ico">🛡️</div>
+      <div>
+        <h4>Garantia de 7 dias — risco zero</h4>
+        <p>Se em 7 dias você não achar que o curso valeu pelo menos 10x o que pagou, manda uma mensagem no WhatsApp e devolvemos 100% do seu dinheiro. Sem pergunta, sem burocracia. O risco é todo nosso.</p>
+      </div>
+    </div>
+
+    <a href="#" class="btn-cta">QUERO COMEÇAR HOJE →</a>
+    <p class="cta-obs" style="margin-top:10px;">Acesso imediato · Sem mensalidade · Suporte no WhatsApp</p>
+  </section>
+
+  <hr class="divisor" style="margin-bottom:32px;">
+</div>
+
+<!-- RODAPÉ -->
+<footer>
+  Excel Elite · Todos os direitos reservados<br>
+  Dúvidas? Fale pelo WhatsApp antes de comprar.
+</footer>
+
+<!-- STICKY MOBILE -->
+<div class="sticky-cta">
+  <a href="#comprar" class="btn-cta">GARANTIR MEU ACESSO — R$27 →</a>
+</div>
+
+</body>
+</html>
